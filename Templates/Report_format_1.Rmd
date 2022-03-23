@@ -1,38 +1,42 @@
 ---
-output: 
+title: "A Pandoc Markdown Article Starter and Template"
+author:
+- name: Eric Clepper
+  affiliation: Clemson University
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
   pdf_document:
     citation_package: natbib
-    keep_tex: true
-    fig_caption: true
+    keep_tex: yes
+    fig_caption: yes
     latex_engine: pdflatex
-    template: ../svm-latex-ms.tex
-bibliography: master.bib
-header-includes:
-  -  \usepackage{hyperref}
-  - \usepackage{array}   
-  - \usepackage{caption}
-  - \usepackage{graphicx}
-  - \usepackage{siunitx}
-  - \usepackage[table]{xcolor}
-  - \usepackage{multirow}
-  - \usepackage{hhline}
-  - \usepackage{calc}
-  - \usepackage{tabularx}
-  - \usepackage{fontawesome}
-  - \usepackage[para,online,flushleft]{threeparttable}
+    template: svm-latex-ms.tex
+  html_document:
+    df_print: paged
 biblio-style: apsr
-title: "A Pandoc Markdown Article Starter and Template"
-thanks: "Replication files are available on the author's Github account (http://github.com/svmiller). **Current version**: `r format(Sys.time(), '%B %d, %Y')`; **Corresponding author**: svmille@clemson.edu."
-author:
-- name: Steven V. Miller
-  affiliation: Clemson University
-abstract: "This document provides an introduction to R Markdown, argues for its benefits, and presents a sample manuscript template intended for an academic audience. I include basic syntax to R Markdown and a minimal working example of how the analysis itself can be conducted within R with the `knitr` package."
-keywords: "pandoc, r markdown, knitr"
-date: "`r format(Sys.time(), '%B %d, %Y')`"
+
+bibliography: master.bib
+abstract: This document provides an introduction to R Markdown, argues for its benefits,
+  and presents a sample manuscript template intended for an academic audience. I include
+  basic syntax to R Markdown and a minimal working example of how the analysis itself
+  can be conducted within R with the `knitr` package.
+keywords: pandoc, r markdown, knitr
+header-includes:
+- \usepackage{hyperref}
+- \usepackage{array}
+- \usepackage{caption}
+- \usepackage{graphicx}
+- \usepackage{siunitx}
+- \usepackage[table]{xcolor}
+- \usepackage{multirow}
+- \usepackage{hhline}
+- \usepackage{calc}
+- \usepackage{tabularx}
+- \usepackage{fontawesome}
+- \usepackage[para,online,flushleft]{threeparttable}
 geometry: margin=1in
 fontfamily: libertine
 fontsize: 11pt
-# spacing: double
 endnote: no
 ---
 
@@ -209,19 +213,6 @@ arm::coefplot(M1)
 The implications for workflow are faily substantial. Authors can rather quickly display the code they used to run the analyses in the document itself (likely in the appendix). As such, there's little guesswork for reviewers and editors in understanding what the author did in the analyses reported in the manuscript.
 
 It doesn't end there. In fact, here's what happens when `eval=FALSE` is omitted or changed to `eval=TRUE`. Now, the code runs within R. Observe.
-
-```{r, eval=TRUE, tidy = TRUE, cache=FALSE, fig.cap="A Coefficient Plot", message=F, warning=F}
-library(stevedata)
-data(uniondensity)
-library(tidyverse)
-uniondensity %>%
-  mutate(z_left = r2sd(left),
-         z_size = r2sd(size),
-         z_concen = r2sd(concen)) -> uniondensity
-M1 <- lm(union ~ z_left + z_size + z_concen, data=uniondensity)
-# library(arm)
-arm::coefplot(M1)
-```
 
 To get `knitr` to present the results of a table, add `results="asis"` to the brackets to start the R code chunk. The ensuing output will look like this (though the table may come on the next page).
 
